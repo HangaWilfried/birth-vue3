@@ -1,7 +1,7 @@
 <template>
     <article v-for="(item, index) in items" :key="index" v-bind:style="{backgroundColor: item.randColor, color: '#fff'}">
         <div class="info">
-            <p class="important">{{item.lastname}} {{item.firstname}}</p>
+            <p class="important">{{item.fullname}}</p>
             <p><span>next Birth day:</span> <span class="important">{{`${item.birth.date} ${item.birth.month} ${new Date().getFullYear()+1}`}}</span></p>
             <p class="important">less than {{item.deadline}} Days.</p>
         </div>
@@ -20,9 +20,7 @@
         },
         setup(props){
             const { items } = toRefs(props)
-            function  deleteFromItem(index) {
-                items.value.splice(index, 1);
-            }
+            const deleteFromItem = index => items.value.splice(index, 1);
             return{
                 items,
                 deleteFromItem

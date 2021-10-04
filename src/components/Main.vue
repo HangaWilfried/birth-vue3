@@ -43,8 +43,7 @@
             
             function saveBirthInfo(){
                 context.emit('addBirthDay', {
-                    lastname: lastname.value,
-                    firstname: firstname.value,
+                    fullname: `${lastname.value} ${firstname.value}`,
                     birth: {
                         day: day.value[new Date(`${fullbirth.value}`).getDay()],
                         date: new Date(`${fullbirth.value}`).getDate(),

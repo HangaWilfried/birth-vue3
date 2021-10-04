@@ -2,7 +2,7 @@
     <main>
         <Header :totalOfBirth="someOfBirth" />
         <Main @addBirthDay="addToBirthDayList" />
-        <Footer :items="Births" />
+        <Footer :items="listOfBirthDay" />
     </main>
 </template>
 
@@ -18,19 +18,27 @@
             Main,
             Footer,
         },
-        setup(prop) {
-            const Births = ref([])
+        setup() {
+            const listOfBirthDay = ref([])
+            let flag = ref(false);
             function addToBirthDayList(obj){
-                Births.value.push(obj)
-                console.log(Births.value);
+                listOfBirthDay.value.some(item => flag.value = item.fullname == obj.fullname); 
+                if(flag.value == false){
+                   listOfBirthDay.value.push(obj); 
+                }    
+                else{
+                    alert('deja renseigne')
+                }
             }
+            
             const someOfBirth = computed(()=>{
-                return Births.value.length;
+                return listOfBirthDay.value.length;
             })
             return{
-                Births,
+                listOfBirthDay,
                 addToBirthDayList,
-                someOfBirth
+                someOfBirth,
+                flag
             }
         }
     }
