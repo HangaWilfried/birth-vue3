@@ -1,26 +1,25 @@
-<template>
-    <article v-for="(item, index) in items" :key="index" v-bind:style="{backgroundColor: item.randColor, color: '#fff'}">
-        <div class="info">
-            <p class="important">{{item.fullname}}</p>
-            <p><span>next Birth day:</span> <span class="important">{{`${item.birth.date} ${item.birth.month} ${new Date().getFullYear()+1}`}}</span></p>
-            <p class="important">less than {{item.deadline}} Days.</p>
-        </div>
-        <div>
-            <p class="delete"><span @click="deleteFromItem(index)">x</span></p>
-        </div>
-    </article>
+<template> 
+    <div class="info">
+        <p class="important">{{fullname}}</p>
+        <p><span>next Birth day:</span> <span class="important">{{`${date} ${month} ${new Date().getFullYear()+1}`}}</span></p>
+        <p class="important">less than {{deadline}} Days.</p>
+    </div>
+    <div>
+        <p class="delete"><span @click="deleteFromItem(index)">x</span></p>
+    </div>
 </template>
 
 <script>
     import { toRefs } from 'vue'
     export default {
         name: "Footer",
-        props: {
-            items: Array
-        },
+        props: ['items','index','fullname','deadline','date','month'],
         setup(props){
             const { items } = toRefs(props)
-            const deleteFromItem = index => items.value.splice(index, 1);
+            const deleteFromItem = index =>{
+                items.value.splice(index, 1);
+                localStorage.setItem('value',JSON.stringify(items.value));
+            } 
             return{
                 items,
                 deleteFromItem
@@ -30,20 +29,21 @@
 </script>
 
 <style scoped>
-    article{
+    /* article{
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         padding: 10px 20px;
         margin-bottom: 1px;
-    }
+    } */
     .info{
         padding: 20px;
         box-shadow: 1px 1px 10px #000;
     }
     .important{
-        padding: 5px 10px;
+        /* padding: 5px 10px; */
+        padding: 10px 7px 5px 7px;
         color: #000;
         background-color: #fff;
         border-radius: 5px;
