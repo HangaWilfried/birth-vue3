@@ -4,10 +4,13 @@
         <Main @addBirthDay="addToBirthDayList" />
         <section>
             <article v-for="(item, index) in listOfBirthDay" :key="index" v-bind:style="{backgroundColor: item.randColor, color: '#fff'}">
-                <Footer :items="listOfBirthDay" :index="index" :fullname="item.fullname"
-                 :deadline="item.deadline" :date="item.birth.date" :month="item.birth.month"/>
+                <Footer :fullname="item.fullname" :deadline="item.deadline" :date="item.birth.date" :month="item.birth.month" @remove="deleteFromItem(index)"/>
             </article>
         </section>
+
+        <div>
+            you can join <a href="mailto:wilfriedhanga5@gmail.com">wilfried hanga</a> here...
+        </div>   
     </main>
 </template>
 
@@ -44,19 +47,32 @@
                   if(localStorage.getItem('value'))
                     listOfBirthDay.value = JSON.parse(localStorage.getItem('value'))
             })
+            const deleteFromItem = index =>{
+                listOfBirthDay.value.splice(index, 1);
+                localStorage.setItem('value',JSON.stringify(listOfBirthDay.value));
+            } 
             return{
                 listOfBirthDay,
                 addToBirthDayList,
                 someOfBirth,
-                flag
+                flag,
+                deleteFromItem
             }
         }
     }
 </script>
 
 <style scoped>
+    div{
+        margin-top: 30px;
+        color: rgb(247, 156, 52);
+    }
+    div a{
+        text-decoration: underline;
+        color: rgb(218, 150, 5);
+    }
     section{
-    display: block;
+        display: block;
     }
     article{
         display: flex;
