@@ -1,10 +1,10 @@
 <template>
     <main>
         <Header :totalOfBirth="someOfBirth" />
-        <Main @addBirthDay="addToBirthDayList" />
+        <Form @addBirthDay="addToBirthDayList" />
         <section>
             <article v-for="(item, index) in listOfBirthDay" :key="index" v-bind:style="{backgroundColor: item.randColor, color: '#fff'}">
-                <Footer :fullname="item.fullname" :deadline="item.deadline" :date="item.birth.date" :month="item.birth.month" @remove="deleteFromItem(index)"/>
+                <Birth :fullname="item.fullname" :deadline="item.deadline" :date="item.birth.date" :month="item.birth.month" @remove="deleteFromItem(index)"/>
             </article>
         </section>
 
@@ -16,15 +16,15 @@
 
 <script>
     import Header from "./components/Header.vue";
-    import Main from "./components/Main.vue";
-    import Footer from "./components/Footer.vue";
+    import Form from "./components/Form.vue";
+    import Birth from "./components/Birth.vue";
     import { computed,ref,onBeforeMount } from 'vue'
     export default {
         name: 'App',
         components: {
             Header,
-            Main,
-            Footer,
+            Form,
+            Birth,
         },
         setup() {
             const listOfBirthDay = ref([])
