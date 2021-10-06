@@ -5,26 +5,15 @@
         <p class="important">less than {{deadline}} Days.</p>
     </div>
     <div>
-        <p class="delete"><span @click="deleteFromItem(index)">x</span></p>
+        <p class="delete"><span><ion-icon name="close-outline" @click="$emit('remove')"></ion-icon></span></p>
     </div>
 </template>
 
 <script>
-    import { toRefs } from 'vue'
     export default {
         name: "Footer",
-        props: ['items','index','fullname','deadline','date','month'],
-        setup(props){
-            const { items } = toRefs(props)
-            const deleteFromItem = index =>{
-                items.value.splice(index, 1);
-                localStorage.setItem('value',JSON.stringify(items.value));
-            } 
-            return{
-                items,
-                deleteFromItem
-            }
-        }
+        props: ['fullname','deadline','date','month'],
+        emits:['remove']
     }
 </script>
 
