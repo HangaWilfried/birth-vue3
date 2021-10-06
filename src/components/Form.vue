@@ -2,7 +2,7 @@
     <div>
         <input type="text" placeholder="last name" v-model="lastname">
         <input type="text" placeholder="first name" v-model="firstname">
-        <input type="type" v-model="fullbirth">
+        <input type="date" v-model="fullbirth">
         <button @click.prevent="saveBirthInfo">complete</button>
     </div>
 </template>
