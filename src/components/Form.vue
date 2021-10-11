@@ -10,7 +10,7 @@
 <script>
     import { ref } from 'vue'
     export default {
-        name: "Main",
+        name: "Form",
         setup(props, context){
             let lastname = ref(''),
             firstname = ref(''),
@@ -54,7 +54,8 @@
                     deadline: getDeadLine()
                 })
             }
-            
+
+
             
             return{
                 getRandomColor,
@@ -97,13 +98,17 @@
         border: none;
     }
     button{
-        font-size: 13px;
-        width: 100px;
-        height: 30px;
-        border-radius: 5px;
+        font-size: 14px;
+        width: 200px;
+        height: 35px;
+        border-radius: 3px;
+        border: 1px solid rgb(233, 228, 228);
+        background-color: rgb(223, 228, 228);
+        color: #fff;
+        padding: 5px 10px;
+    }
+    button:hover{  
         border: 1px solid #ccc;
         background-color: #ccc;
-        color: #fff;
-        padding: 7px;
     }
 </style>

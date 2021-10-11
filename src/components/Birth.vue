@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        name: "Footer",
+        name: "Birth",
         props: ['fullname','deadline','date','month'],
         emits:['remove']
     }
