@@ -1,13 +1,5 @@
 <template>
-    <header>
-        <div>
-            <slot></slot>    
-        </div>
-        <div class="about">
-            <strong>{{currentYear}}</strong>
-            <span>BirthDays</span>
-        </div>
-    </header>
+    <slot></slot>    
 </template>
 
 <script>
@@ -23,6 +15,7 @@
         }
     }
 </script>
+
 
 <style scoped>
     header{

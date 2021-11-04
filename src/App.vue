@@ -1,7 +1,15 @@
 <template>
     <main>
         <Header>
-            <h5>added - {{countBirthdays}}</h5>
+            <template v-slot:default>
+                <header>
+                    <h5>added - {{countBirthdays}}</h5>
+                    <div class="about">
+                        <strong>{{currentYear}}</strong>
+                        <span>BirthDays</span>
+                    </div>
+                </header>
+            </template>
         </Header>
         <Form @addBirthday="addNewBirthday" />
         <section>
@@ -27,9 +35,9 @@
             </article>
         </section>
 
-        <!--<teleport to='body'/>
-            you can join <a href="mailto:wilfriedhanga5@gmail.com">wilfried hanga</a> here...
-        </teleport>  --> 
+        <teleport to='body'/>
+            <div class="cards">Fait avec amour par wilfried hanga</div> 
+        </teleport>
     </main>
 </template>
 
@@ -89,14 +97,6 @@
 </script>
 
 <style scoped>
-    div{
-        margin-top: 30px;
-        color: rgb(247, 156, 52);
-    }
-    div a{
-        text-decoration: underline;
-        color: rgb(218, 150, 5);
-    }
     section{
         display: block;
     }
@@ -123,5 +123,14 @@
             padding: 20px;
             gap: 10px 50px;
         }
+    }
+
+    .cards{
+        padding: 20px;
+        margin-top: 150px;
+        border: 1px solid #f5f2f5;
+        font-size: 20px; 
+        background-color: #f5f2f5;
+        color: #333030;
     }
 </style>
