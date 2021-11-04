@@ -1,19 +1,21 @@
 <template> 
     <div class="info">
-        <p class="important">{{fullname}}</p>
+        <slot name='bibliography'></slot>
+        <!--<p class="important">{{fullname}}</p>
         <p><span>next Birth day:</span> <span class="important">{{`${date} ${month} ${new Date().getFullYear()+1}`}}</span></p>
-        <p class="important">less than {{deadline}} Days.</p>
+        <p class="important">less than {{deadline}} Days.</p>-->
     </div>
     <div>
-        <p class="delete"><span><ion-icon name="close-outline" @click="$emit('remove')"></ion-icon></span></p>
+        <slot name='clear'></slot>
+        <!--<p class="delete"><span><ion-icon name="close-outline" @click="$emit('remove')"></ion-icon></span></p>-->
     </div>
 </template>
 
 <script>
     export default {
         name: "Birth",
-        props: ['fullname','deadline','date','month'],
-        emits:['remove']
+        //props: ['fullname','deadline','date','month'],
+        //emits:['remove']
     }
 </script>
 
