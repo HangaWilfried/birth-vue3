@@ -1,18 +1,25 @@
 <template>
     <header>
-        <div><h5>added - {{totalOfBirth}}</h5></div>
+        <div>
+            <slot></slot>    
+        </div>
         <div class="about">
-            <strong>{{new Date().getFullYear()+1}}</strong>
+            <strong>{{currentYear}}</strong>
             <span>BirthDays</span>
         </div>
     </header>
 </template>
 
 <script>
+    import getCurrentYear from '../composable/reusableYear.js'
     export default {
         name: "Header",
-        props:{
-            totalOfBirth : Number
+        setup(){
+            const {currentYear} = getCurrentYear()
+
+            return{
+                currentYear
+            }
         }
     }
 </script>

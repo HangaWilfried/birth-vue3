@@ -1,16 +1,35 @@
 <template>
     <main>
-        <Header :totalOfBirth="someOfBirth" />
-        <Form @addBirthDay="addToBirthDayList" />
+        <Header>
+            <h5>added - {{countBirthdays}}</h5>
+        </Header>
+        <Form @addBirthday="addNewBirthday" />
         <section>
-            <article v-for="(item, index) in listOfBirthDay" :key="index" v-bind:style="{backgroundColor: item.randColor, color: '#fff'}">
-                <Birth :fullname="item.fullname" :deadline="item.deadline" :date="item.birth.date" :month="item.birth.month" @remove="deleteFromItem(index)"/>
+            <article v-for="(birthday, index) in birthdays" :key="index" v-bind:style="{backgroundColor: birthday.randColor, color: '#fff'}">
+                <Birth>
+                    <template #bibliography>
+                        <p class="important">{{birthday.fullName}}</p>
+                        <p>
+                            <span>next Birth day:</span>
+                            <span class="important">{{`${birthday.birth.date} ${birthday.birth.month} ${currentYear}`}}</span>
+                        </p>
+                        <p class="important">less than {{birthday.remaining}} Days.</p>
+                    </template>
+                    
+                    <template #clear>
+                        <p class="delete">
+                            <span>
+                                <ion-icon name="close-outline" @click="deleteBirthday(index)"></ion-icon>
+                            </span>
+                        </p>
+                    </template>
+                </Birth>
             </article>
         </section>
 
-        <div>
+        <!--<teleport to='body'/>
             you can join <a href="mailto:wilfriedhanga5@gmail.com">wilfried hanga</a> here...
-        </div>   
+        </teleport>  --> 
     </main>
 </template>
 
@@ -18,7 +37,8 @@
     import Header from "./components/Header.vue";
     import Form from "./components/Form.vue";
     import Birth from "./components/Birth.vue";
-    import { computed,ref,onBeforeMount } from 'vue'
+    import { computed, ref, onBeforeMount } from 'vue'
+    import getCurrentYear from './composable/reusableYear.js'
     export default {
         name: 'App',
         components: {
@@ -27,36 +47,42 @@
             Birth,
         },
         setup() {
-            const listOfBirthDay = ref([])
-            let flag = ref(false);
-            function addToBirthDayList(obj){
-                listOfBirthDay.value.some(item => flag.value = item.fullname == obj.fullname); 
-                if(flag.value == false){
-                   listOfBirthDay.value.push(obj); 
-                }    
-                else{
+            const {currentYear} = getCurrentYear()
+            const birthdays = ref([])
+            let alreadyAdded = ref(false);
+            const addNewBirthday = obj => {
+                alreadyAdded.value = birthdays.value.some( item => item.fullName == obj.fullName);  
+                if( typeof obj.fullName == 'undefined' || typeof obj.birth.date == 'null' || typeof obj.birth.month == 'undefined') {
+                    alert('veuillez remplir les champs incomplets')
+                }
+                else if(alreadyAdded.value == true){
                     alert('deja renseigne')
                 }
-                localStorage.setItem('value', JSON.stringify(listOfBirthDay.value))
+                else{
+                    birthdays.value.push(obj)
+                }
+
+                localStorage.setItem('value', JSON.stringify(birthdays.value))
             }
             
-            const someOfBirth = computed(()=>{
-                return listOfBirthDay.value.length;
+            const countBirthdays = computed(()=>{
+                return birthdays.value.length;
             })
             onBeforeMount(()=>{
                   if(localStorage.getItem('value'))
-                    listOfBirthDay.value = JSON.parse(localStorage.getItem('value'))
+                    birthdays.value = JSON.parse(localStorage.getItem('value'))
             })
-            const deleteFromItem = index =>{
-                listOfBirthDay.value.splice(index, 1);
-                localStorage.setItem('value',JSON.stringify(listOfBirthDay.value));
+            const deleteBirthday = index =>{
+                birthdays.value.splice(index, 1);
+                localStorage.setItem('value',JSON.stringify(birthdays.value));
             } 
             return{
-                listOfBirthDay,
-                addToBirthDayList,
-                someOfBirth,
-                flag,
-                deleteFromItem
+                birthdays,
+                addNewBirthday,
+                countBirthdays,
+                alreadyAdded,
+                deleteBirthday,
+                currentYear
             }
         }
     }
